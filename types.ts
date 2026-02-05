@@ -15,8 +15,8 @@ export interface StaffMember {
 
 export interface NewsItem {
   id: string;
-  date: string;         // Untuk paparan teks (contoh: 28 Feb 2025)
-  timestamp: string;    // Untuk susunan (Format: YYYY-MM-DD, contoh: 2025-02-28)
+  date: string;
+  timestamp: string;
   title: string;
   category: string;
   img: string;           
@@ -39,10 +39,4 @@ export interface ChatMessage {
   isError?: boolean;
 }
 
-export enum Section {
-  HERO = 'hero',
-  STAFF = 'kakitangan',
-  PROFIL = 'profil',
-  PROGRAM = 'program',
-  BERITA = 'berita'
-}
+export type SectionType = 'hero' | 'kakitangan' | 'profil' | 'program' | 'berita';

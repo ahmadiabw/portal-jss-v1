@@ -8,11 +8,13 @@ import { GoogleGenAI, GenerateContentResponse } from "@google/genai";
 
 export const sendMessageToGemini = async (message: string): Promise<string> => {
   try {
-    // Check if process and API_KEY exist to avoid crashing in static environments
-    const apiKey = typeof process !== 'undefined' ? process.env.API_KEY : '';
+    // Definisi API KEY yang selamat
+    const apiKey = (typeof process !== 'undefined' && process.env && process.env.API_KEY) 
+      ? process.env.API_KEY 
+      : '';
     
-    if (!apiKey) {
-      return "Kunci API tidak dijumpai. Sila tetapkan kunci anda melalui butang konfigurasi.";
+    if (!apiKey || apiKey === '') {
+      return "Sistem AI sedang dalam mod penyelenggaraan (Kunci API tidak diaktifkan).";
     }
 
     const ai = new GoogleGenAI({ apiKey });
@@ -42,9 +44,9 @@ export const sendMessageToGemini = async (message: string): Promise<string> => {
       },
     });
 
-    return response.text || "Penyampaian terputus.";
+    return response.text || "Maaf, saya tidak dapat memproses permintaan anda sekarang.";
   } catch (error) {
     console.error("Gemini Error:", error);
-    return "Gangguan isyarat. Sila cuba sebentar lagi.";
+    return "Maaf, sambungan ke pelayan AI terputus.";
   }
 };

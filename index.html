@@ -5,10 +5,16 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>JABATAN SAINS SOSIAL | PORTAL RASMI</title>
+    
+    <!-- Tailwind & Fonts -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Babel for Browser-side TSX Transpilation -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
     <style>
       html {
         scroll-behavior: smooth;
@@ -23,28 +29,46 @@
         font-family: 'Space Grotesk', sans-serif;
         background-color: #001a33;
         color: #fff;
+        margin: 0;
         overflow-x: hidden;
       }
       h1, h2, h3, .font-heading {
         font-family: 'Syncopate', sans-serif;
       }
+      #root {
+        min-height: 100vh;
+        position: relative;
+        z-index: 1;
+      }
     </style>
-  <script type="importmap">
-{
-  "imports": {
-    "react/": "https://aistudiocdn.com/react@^19.2.0/",
-    "react": "https://aistudiocdn.com/react@^19.2.0",
-    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
-    "react-dom": "https://aistudiocdn.com/react-dom@^19.2.0",
-    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.553.0",
-    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.29.0",
-    "framer-motion": "https://aistudiocdn.com/framer-motion@^12.23.24"
-  }
-}
-</script>
-</head>
+
+    <!-- Shim for process.env (Required for many libraries like Gemini) -->
+    <script>
+      window.process = { 
+        env: { NODE_ENV: 'production' },
+        cwd: () => '/'
+      };
+      window.global = window;
+    </script>
+
+    <script type="importmap">
+    {
+      "imports": {
+        "react": "https://esm.sh/react@19.0.0",
+        "react/": "https://esm.sh/react@19.0.0/",
+        "react-dom": "https://esm.sh/react-dom@19.0.0",
+        "react-dom/": "https://esm.sh/react-dom@19.0.0/",
+        "react-dom/client": "https://esm.sh/react-dom@19.0.0/client",
+        "lucide-react": "https://esm.sh/lucide-react@0.474.0?external=react",
+        "@google/genai": "https://esm.sh/@google/genai@1.2.0",
+        "framer-motion": "https://esm.sh/framer-motion@11.17.0?external=react,react-dom"
+      }
+    }
+    </script>
+  </head>
   <body>
     <div id="root"></div>
-    <script type="module" src="index.tsx"></script>
+    <!-- Note: type="text/babel" and data-type="module" allows Babel to transpile the TSX while maintaining ESM imports -->
+    <script type="text/babel" data-type="module" data-presets="typescript,react" src="index.tsx"></script>
   </body>
 </html>

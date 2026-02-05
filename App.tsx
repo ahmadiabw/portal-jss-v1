@@ -20,14 +20,6 @@ import Carousel from './components/Carousel.tsx';
 import NewsSection from './components/NewsSection.tsx';
 import { StaffMember } from './types.ts';
 
-// Fix: Define the AIStudio interface to satisfy global expectations and avoid conflict with redeclaration on Window
-declare global {
-  interface AIStudio {
-    hasSelectedApiKey: () => Promise<boolean>;
-    openSelectKey: () => Promise<void>;
-  }
-}
-
 const THEMES = {
   light: {
     bgPrimary: '#FFFFFF',    
@@ -60,7 +52,7 @@ const JSS_STAFF: StaffMember[] = [
     name: 'Dr. Ahmadi bin Abd Wahab', 
     position: 'Ketua Jabatan', 
     field: 'Geografi & Sejarah', 
-    image: 'https://lh3.googleusercontent.com/pw/AP1GczP8_57pZa4Aw3DUQLEi-J8LVHxInZQMZ0RlmhgCEK0ookYOwHpAh62qgsgZmpOfUVaIl-Lgt7L6MC1XWPjgYdjAA_mP3AeMcMskaFULhiBChcDVCIzfuZ2DLCEgwdVCxq5v6d2dCItsmLGQGJaN9w_0=w800-h800-s-no-gm?authuser=0',
+    image: 'https://raw.githubusercontent.com/ahmadiabw/portal-jss/main/aset/Staf/Ahmadi.png',
     description: 'Beliau merupakan Ketua Jabatan yang memiliki kelayakan Ijazah Doktor Falsafah (PhD) dalam Sains Bumi, Sarjana Sains Sosial, dan Ijazah Sarjana Muda Sastera dengan Pendidikan.'
   },
   { 
@@ -68,7 +60,7 @@ const JSS_STAFF: StaffMember[] = [
     name: 'En. Mhd Yusof bin Zakaria', 
     position: 'Pensyarah Kanan', 
     field: 'Unit Sejarah', 
-    image: 'https://lh3.googleusercontent.com/pw/AP1GczMsNRQfR-qOWvxmAMFaoErY0s_qgX1cpxTDum1jLt2ijAG9oPJieoE7_w8kWoGMQNyeP2E9g3pf-LzwxPQ9W20a73CLuE8RzbJIw9X1NjEZ08mU1Z07Bjcmq5IrdTfqURGA92F6OwPieNUfdvDAPibD=w800-h800-s-no-gm?authuser=0',
+    image: 'https://raw.githubusercontent.com/ahmadiabw/portal-jss/main/aset/Staf/Yusof.png',
     description: 'Pensyarah Kanan yang memiliki kelayakan Ijazah Sarjana (Pengurusan Disiplin), Ijazah Sarjana Muda serta Diploma Pendidikan dalam bidang Sejarah.'
   },
   { 
@@ -76,7 +68,7 @@ const JSS_STAFF: StaffMember[] = [
     name: 'Dr. Jusman bin Aman Setia', 
     position: 'Ketua Unit Sejarah', 
     field: 'Unit Sejarah', 
-    image: 'https://lh3.googleusercontent.com/pw/AP1GczN-BCh1CRAv_Sw2JuAuWtGzDXoa8pCMW_0iwOei-aSr-AQ5zKmMmsjaKhsCFoZCkNMFhpAys0AnYI_W1WuaJ71jnuj35jO3f1uiG3dqlLPb0j7zWER8keE32Pzj3bjbrtUpnLu3tMQYtnGVcRJeB24G=w800-h800-s-no-gm?authuser=0',
+    image: 'https://raw.githubusercontent.com/ahmadiabw/portal-jss/main/aset/Staf/Jusman.png',
     description: 'Beliau memegang jawatan Ketua Unit Sejarah dengan kelayakan PhD dan Sarjana dalam bidang Sejarah.'
   },
   { 
@@ -84,7 +76,7 @@ const JSS_STAFF: StaffMember[] = [
     name: 'Pn. Aggenes Tona Antonius', 
     position: 'Pensyarah', 
     field: 'Unit Sejarah', 
-    image: 'https://lh3.googleusercontent.com/pw/AP1GczP1wcAHouAjo0gADvUazhLCk1y_BWKXQhPRBa2RGjrKJ8dNQ1SDcomrI9Ka2_xx_3Fc0-xM4zmKH_OfNd6lELpLVvGJmuiLFUHuvhBltVEp6lGgyhmoDix9OEowkGks-TsAWNcY0pwj8WAIvtT31KkX=w800-h800-s-no-gm?authuser=0',
+    image: 'https://raw.githubusercontent.com/ahmadiabw/portal-jss/main/aset/Staf/Aggenes.png',
     description: 'Beliau memiliki kelayakan Ijazah Sarjana Psikologi Pendidikan, Ijazah Sarjana Muda Sastera (Sejarah), dan Sijil Perguruan Asas.'
   },
   { 
@@ -92,7 +84,7 @@ const JSS_STAFF: StaffMember[] = [
     name: 'Dr. Muliyati binti Timbang', 
     position: 'Ketua Unit Muzik & Seni', 
     field: 'Unit Muzik & PSV', 
-    image: 'https://lh3.googleusercontent.com/pw/AP1GczNR2Hs5o19E2CBwWUMZUk0cXvaTTE98bjNoIDot_6TsCTlEx1mcaCgpEE-mkHK1lZU_mVmT42f95FvUw6zdUdQMmHWaqM5L9GO94fYqVsTNJn52d8iYGEQoyQcS0d3-dvsaCkA9XQmqmWZX1hG0rLDs=w800-h800-s-no-gm?authuser=0',
+    image: 'https://raw.githubusercontent.com/ahmadiabw/portal-jss/main/aset/Staf/Muliyati.png',
     description: 'Ketua Unit Pendidikan Muzik dan Seni Visual yang berkelulusan PhD dan Sarjana dalam Pengurusan Pendidikan.'
   },
 ];
@@ -106,6 +98,11 @@ const App: React.FC = () => {
   const theme = isDarkMode ? THEMES.dark : THEMES.light;
 
   useEffect(() => {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') setIsDarkMode(true);
+  }, []);
+
+  useEffect(() => {
     localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
     document.body.style.backgroundColor = theme.bgPrimary;
     document.body.style.color = theme.textPrimary;
@@ -115,10 +112,11 @@ const App: React.FC = () => {
 
   const handleKeySelection = async () => {
     try {
-      if (window.aistudio) {
-        await window.aistudio.openSelectKey();
+      const aistudio = (window as any).aistudio;
+      if (aistudio && typeof aistudio.openSelectKey === 'function') {
+        await aistudio.openSelectKey();
       } else {
-        alert("Fungsi pemilihan kunci API tidak tersedia dalam persekitaran ini.");
+        alert("Konfigurasi API Key hanya tersedia dalam persekitaran AI Studio.");
       }
     } catch (error) {
       console.error("Gagal membuka pemilihan kunci:", error);
@@ -138,19 +136,19 @@ const App: React.FC = () => {
 
   return (
     <div 
-      className="relative min-h-screen transition-colors duration-500 selection:bg-[#EE2A24] selection:text-white cursor-auto md:cursor-none overflow-x-hidden"
+      className="relative min-h-screen transition-colors duration-500 selection:bg-[#EE2A24] selection:text-white overflow-x-hidden"
       style={{ backgroundColor: theme.bgPrimary, color: theme.textPrimary }}
     >
       <CustomCursor />
       <FluidBackground theme={isDarkMode ? 'dark' : 'light'} />
       <AIChat theme={isDarkMode ? 'dark' : 'light'} />
       
-      {/* Mini Navigation Bar */}
+      {/* Navigation */}
       <div className="fixed top-0 left-0 right-0 z-50">
         <div className="h-1 bg-[#003366] w-full" />
         <header className="py-4 px-6 md:px-12 flex items-center transition-all duration-500 backdrop-blur-xl border-b shadow-sm" style={{ backgroundColor: theme.navBg + 'E6', borderColor: theme.border }}>
           <div className="max-w-[1600px] w-full mx-auto flex items-center justify-between">
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 cursor-pointer" onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}>
               <div className="w-8 h-8 rounded bg-[#003366] flex items-center justify-center">
                  <span className="text-white font-black text-[10px]">JSS</span>
               </div>
@@ -180,18 +178,14 @@ const App: React.FC = () => {
               <div className="ml-8 pl-8 border-l flex items-center gap-2" style={{ borderColor: theme.border }}>
                 <button 
                   onClick={handleKeySelection}
-                  className="p-2 rounded-full hover:bg-slate-100 transition-all group relative"
+                  className="p-2 rounded-full hover:bg-slate-100/10 transition-all group relative"
                   style={{ color: theme.textPrimary }}
-                  title="Pilih Kunci API (Veo/Pro)"
                 >
                   <Key size={16} />
-                  <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 bg-black text-white text-[8px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 whitespace-nowrap pointer-events-none">
-                    API Key Config
-                  </span>
                 </button>
                 <button 
                   onClick={toggleTheme}
-                  className="p-2 rounded-full hover:bg-slate-100 transition-all"
+                  className="p-2 rounded-full hover:bg-slate-100/10 transition-all"
                   style={{ color: theme.textPrimary }}
                 >
                   {isDarkMode ? <Sun size={16} /> : <Moon size={16} />}
@@ -200,9 +194,6 @@ const App: React.FC = () => {
             </div>
 
             <div className="flex items-center lg:hidden gap-4">
-              <button onClick={handleKeySelection} style={{ color: theme.textPrimary }}>
-                <Key size={18} />
-              </button>
               <button onClick={toggleTheme} style={{ color: theme.textPrimary }}>
                 {isDarkMode ? <Sun size={18} /> : <Moon size={18} />}
               </button>
@@ -212,21 +203,46 @@ const App: React.FC = () => {
             </div>
           </div>
         </header>
+
+        {/* Mobile Menu */}
+        <AnimatePresence>
+          {mobileMenuOpen && (
+            <motion.div 
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              className="lg:hidden w-full overflow-hidden border-b"
+              style={{ backgroundColor: theme.bgPrimary, borderColor: theme.border }}
+            >
+              <div className="p-6 flex flex-col gap-4">
+                {['Profil', 'Kakitangan', 'Berita', 'Program'].map((item) => (
+                  <button 
+                    key={item}
+                    onClick={() => scrollToSection(item.toLowerCase())}
+                    className="text-left font-heading font-bold text-sm uppercase tracking-widest py-2"
+                  >
+                    {item}
+                  </button>
+                ))}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
 
       {/* Hero Branding Section */}
-      <section className="relative pt-32 pb-16 px-6 md:px-12 flex items-center justify-center" style={{ backgroundColor: theme.bgPrimary }}>
+      <section className="relative pt-40 pb-16 px-6 md:px-12 flex items-center justify-center">
         <div className="max-w-[1600px] w-full flex flex-col md:flex-row items-center justify-center gap-10">
           <motion.div
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            className="p-4 bg-white rounded-2xl shadow-xl border"
+            className="p-4 bg-white rounded-2xl shadow-xl border overflow-hidden"
             style={{ borderColor: theme.border }}
           >
             <img 
               src={logoHasError ? FALLBACK_LOGO : LOGO_URL} 
               alt="Logo" 
-              className="w-20 h-20 md:w-32 md:h-32 object-contain" 
+              className="w-24 h-24 md:w-32 md:h-32 object-contain" 
               onError={() => setLogoHasError(true)} 
             />
           </motion.div>
@@ -238,12 +254,12 @@ const App: React.FC = () => {
         </div>
       </section>
 
-      {/* Running Info Strip */}
-      <div className="w-full py-6 border-y overflow-hidden shadow-inner" style={{ backgroundColor: isDarkMode ? '#000d1a' : '#FFFFFF', borderColor: theme.border }}>
+      {/* Info Strip */}
+      <div className="w-full py-6 border-y overflow-hidden shadow-inner" style={{ backgroundColor: isDarkMode ? 'rgba(0,13,26,0.5)' : '#FFFFFF', borderColor: theme.border }}>
         <motion.div 
           className="flex whitespace-nowrap"
           animate={{ x: ["0%", "-50%"] }}
-          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+          transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
         >
           {[0, 1].map((i) => (
             <div key={i} className="flex shrink-0">
@@ -270,11 +286,11 @@ const App: React.FC = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <motion.div 
-              whileHover={{ y: -10, scale: 1.02 }}
-              className="p-10 rounded-3xl border shadow-sm transition-all hover:shadow-2xl hover:border-red-500/30"
+              whileHover={{ y: -10 }}
+              className="p-10 rounded-3xl border shadow-sm transition-all"
               style={{ borderColor: theme.border, backgroundColor: isDarkMode ? '#001a33' : '#FFFFFF' }}
             >
-              <div className="w-14 h-14 bg-red-50 rounded-2xl flex items-center justify-center mb-6">
+              <div className="w-14 h-14 bg-red-500/10 rounded-2xl flex items-center justify-center mb-6">
                 <Target className="text-[#EE2A24] w-8 h-8" />
               </div>
               <h3 className="text-2xl font-heading font-bold mb-4 uppercase text-[#EE2A24]">VISI</h3>
@@ -282,11 +298,11 @@ const App: React.FC = () => {
             </motion.div>
 
             <motion.div 
-              whileHover={{ y: -10, scale: 1.02 }}
-              className="p-10 rounded-3xl border shadow-sm transition-all hover:shadow-2xl hover:border-blue-500/30"
+              whileHover={{ y: -10 }}
+              className="p-10 rounded-3xl border shadow-sm transition-all"
               style={{ borderColor: theme.border, backgroundColor: isDarkMode ? '#001a33' : '#FFFFFF' }}
             >
-              <div className="w-14 h-14 bg-blue-50 rounded-2xl flex items-center justify-center mb-6">
+              <div className="w-14 h-14 bg-blue-500/10 rounded-2xl flex items-center justify-center mb-6">
                 <Compass className="text-[#003366] w-8 h-8" />
               </div>
               <h3 className="text-2xl font-heading font-bold mb-4 uppercase text-[#003366]">MISI</h3>
@@ -297,13 +313,13 @@ const App: React.FC = () => {
       </section>
 
       {/* Kakitangan Section */}
-      <section id="kakitangan" className="py-24 px-6" style={{ backgroundColor: theme.bgPrimary }}>
+      <section id="kakitangan" className="py-24 px-6">
         <div className="max-w-[1600px] mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
             <h2 className="text-4xl md:text-7xl font-heading font-bold leading-none tracking-tighter uppercase">
               WARGA <br/> <GradientText text="AKADEMIK" theme={isDarkMode ? 'dark' : 'light'} />
             </h2>
-            <p className="max-w-md opacity-50 font-medium text-right uppercase tracking-widest text-xs">
+            <p className="max-w-md opacity-50 font-medium text-right uppercase tracking-widest text-[10px]">
               Pakar bidang sejarah & bidang sains sosial yang berdedikasi tinggi.
             </p>
           </div>
@@ -328,13 +344,13 @@ const App: React.FC = () => {
         </div>
       </section>
 
-      {/* Komponen Berita JSS */}
+      {/* Berita */}
       <NewsSection theme={isDarkMode ? 'dark' : 'light'} />
 
-      {/* Program 2026 Section */}
+      {/* Program 2026 */}
       <section id="program" className="py-24 px-6 border-t" style={{ backgroundColor: theme.bgPrimary, borderColor: theme.border }}>
         <div className="max-w-4xl mx-auto text-center">
-          <div className="inline-block p-4 bg-blue-50 rounded-full mb-8">
+          <div className="inline-block p-4 bg-blue-500/10 rounded-full mb-8">
             <GraduationCap className="w-12 h-12 text-[#003366]" />
           </div>
           <h2 className="text-4xl font-heading font-bold mb-6">Program Akademik 2026</h2>
@@ -370,16 +386,32 @@ const App: React.FC = () => {
       {/* Staff Modal */}
       <AnimatePresence>
         {selectedStaff && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setSelectedStaff(null)} className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/40 backdrop-blur-md">
-            <motion.div initial={{ scale: 0.9, y: 20 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.9, y: 20 }} onClick={(e) => e.stopPropagation()} className="relative w-full max-w-4xl overflow-hidden rounded-[40px] flex flex-col md:flex-row shadow-2xl" style={{ backgroundColor: theme.bgPrimary, borderColor: theme.border, borderStyle: 'solid', borderWidth: '1px' }}>
-              <button onClick={() => setSelectedStaff(null)} className="absolute top-6 right-6 z-20 p-3 rounded-full bg-slate-100 hover:bg-red-500 hover:text-white transition-all text-slate-800">
+          <motion.div 
+            initial={{ opacity: 0 }} 
+            animate={{ opacity: 1 }} 
+            exit={{ opacity: 0 }} 
+            onClick={() => setSelectedStaff(null)} 
+            className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-md"
+          >
+            <motion.div 
+              initial={{ scale: 0.9, y: 20 }} 
+              animate={{ scale: 1, y: 0 }} 
+              exit={{ scale: 0.9, y: 20 }} 
+              onClick={(e) => e.stopPropagation()} 
+              className="relative w-full max-w-4xl overflow-hidden rounded-[40px] flex flex-col md:flex-row shadow-2xl border" 
+              style={{ backgroundColor: theme.bgPrimary, borderColor: theme.border }}
+            >
+              <button 
+                onClick={() => setSelectedStaff(null)} 
+                className="absolute top-6 right-6 z-20 p-3 rounded-full bg-slate-100 hover:bg-red-500 hover:text-white transition-all text-slate-800"
+              >
                 <X size={24} />
               </button>
               <div className="flex flex-col md:flex-row w-full">
-                <div className="md:w-1/2 h-80 md:h-auto">
-                  <img src={selectedStaff.image} className="w-full h-full object-cover" />
+                <div className="md:w-1/2 h-80 md:h-auto overflow-hidden">
+                  <img src={selectedStaff.image} className="w-full h-full object-cover" alt={selectedStaff.name} />
                 </div>
-                <div className="md:w-1/2 p-12">
+                <div className="md:w-1/2 p-12 overflow-y-auto max-h-[70vh] md:max-h-full">
                   <span className="text-xs font-mono font-bold text-red-500 uppercase tracking-widest">{selectedStaff.field}</span>
                   <h3 className="text-3xl font-heading font-bold uppercase mt-4 mb-2 leading-tight" style={{ color: theme.textPrimary }}>{selectedStaff.name}</h3>
                   <p className="text-sm font-bold opacity-40 mb-8 uppercase tracking-widest border-b pb-4" style={{ color: theme.textPrimary, borderColor: theme.border }}>{selectedStaff.position}</p>
