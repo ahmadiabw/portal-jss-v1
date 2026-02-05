@@ -38,7 +38,6 @@
         z-index: 1;
       }
 
-      /* Loading State */
       #app-loader {
         position: fixed;
         inset: 0;
@@ -62,7 +61,6 @@
     </style>
 
     <script>
-      // Define process for libraries that expect it
       window.process = { 
         env: { NODE_ENV: 'production' },
         cwd: () => '/'
@@ -93,6 +91,7 @@
 
     <div id="root"></div>
 
+    <!-- Integrasi terus kod index ke dalam HTML untuk memastikan GitHub Pages mengenalinya -->
     <script type="text/babel" data-type="module">
       import React from 'react';
       import ReactDOM from 'react-dom/client';
@@ -101,16 +100,20 @@
       const rootElement = document.getElementById('root');
       if (rootElement) {
         const root = ReactDOM.createRoot(rootElement);
-        root.render(<App />);
+        root.render(
+          <React.StrictMode>
+            <App />
+          </React.StrictMode>
+        );
         
-        // Hide loader once rendered
-        setTimeout(() => {
+        // Sembunyikan loader selepas render selesai
+        window.addEventListener('load', () => {
           const loader = document.getElementById('app-loader');
           if (loader) {
             loader.style.opacity = '0';
             setTimeout(() => loader.remove(), 500);
           }
-        }, 1000);
+        });
       }
     </script>
   </body>
