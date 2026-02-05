@@ -12,7 +12,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
     
-    <!-- Babel for Browser-side JSX Transpilation -->
+    <!-- Babel & React Dependencies -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
     <style>
@@ -32,12 +32,6 @@
       }
       h1, h2, h3, .font-heading { font-family: 'Syncopate', sans-serif; }
       
-      #root {
-        min-height: 100vh;
-        position: relative;
-        z-index: 1;
-      }
-
       #app-loader {
         position: fixed;
         inset: 0;
@@ -59,14 +53,6 @@
       }
       @keyframes spin { to { transform: rotate(360deg); } }
     </style>
-
-    <script>
-      window.process = { 
-        env: { NODE_ENV: 'production' },
-        cwd: () => '/'
-      };
-      window.global = window;
-    </script>
 
     <script type="importmap">
 {
@@ -91,26 +77,24 @@
 
     <div id="root"></div>
 
-    <!-- Gunakan .js supaya GitHub Pages menghantar MIME type yang betul -->
-    <script type="text/babel" data-type="module">
+    <!-- Gunakan data-src untuk memberitahu Babel supaya mengambil fail dan menukarkannya -->
+    <script type="text/babel" data-type="module" data-presets="react">
       import React from 'react';
       import ReactDOM from 'react-dom/client';
       import App from './App.js';
 
-      const rootElement = document.getElementById('root');
-      if (rootElement) {
-        const root = ReactDOM.createRoot(rootElement);
-        root.render(<App />);
-        
-        // Sembunyikan loader
+      const root = ReactDOM.createRoot(document.getElementById('root'));
+      root.render(<App />);
+      
+      window.addEventListener('load', () => {
         setTimeout(() => {
           const loader = document.getElementById('app-loader');
           if (loader) {
             loader.style.opacity = '0';
             setTimeout(() => loader.remove(), 500);
           }
-        }, 1500);
-      }
+        }, 1000);
+      });
     </script>
   </body>
 </html>
