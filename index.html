@@ -12,7 +12,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
     
-    <!-- Babel for Browser-side TSX Transpilation -->
+    <!-- Babel for Browser-side JSX Transpilation -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
     <style>
@@ -91,29 +91,25 @@
 
     <div id="root"></div>
 
-    <!-- Integrasi terus kod index ke dalam HTML untuk memastikan GitHub Pages mengenalinya -->
+    <!-- Gunakan .js supaya GitHub Pages menghantar MIME type yang betul -->
     <script type="text/babel" data-type="module">
       import React from 'react';
       import ReactDOM from 'react-dom/client';
-      import App from './App.tsx';
+      import App from './App.js';
 
       const rootElement = document.getElementById('root');
       if (rootElement) {
         const root = ReactDOM.createRoot(rootElement);
-        root.render(
-          <React.StrictMode>
-            <App />
-          </React.StrictMode>
-        );
+        root.render(<App />);
         
-        // Sembunyikan loader selepas render selesai
-        window.addEventListener('load', () => {
+        // Sembunyikan loader
+        setTimeout(() => {
           const loader = document.getElementById('app-loader');
           if (loader) {
             loader.style.opacity = '0';
             setTimeout(() => loader.remove(), 500);
           }
-        });
+        }, 1500);
       }
     </script>
   </body>
