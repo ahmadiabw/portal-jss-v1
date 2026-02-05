@@ -11,14 +11,14 @@ import {
   Target, Compass, ExternalLink,
   Sun, Moon, Key
 } from 'lucide-react';
-import FluidBackground from './components/FluidBackground';
-import GradientText from './components/GlitchText';
-import CustomCursor from './components/CustomCursor';
-import ArtistCard from './components/ArtistCard';
-import AIChat from './components/AIChat';
-import Carousel from './components/Carousel';
-import NewsSection from './components/NewsSection';
-import { StaffMember } from './types';
+import FluidBackground from './components/FluidBackground.tsx';
+import GradientText from './components/GlitchText.tsx';
+import CustomCursor from './components/CustomCursor.tsx';
+import ArtistCard from './components/ArtistCard.tsx';
+import AIChat from './components/AIChat.tsx';
+import Carousel from './components/Carousel.tsx';
+import NewsSection from './components/NewsSection.tsx';
+import { StaffMember } from './types.ts';
 
 // Fix: Define the AIStudio interface to satisfy global expectations and avoid conflict with redeclaration on Window
 declare global {
@@ -51,7 +51,7 @@ const THEMES = {
   }
 };
 
-const LOGO_URL = "https://github.com/ahmadiabw/portal-jss/blob/main/aset/logo%20IPGKT.png?raw=true";
+const LOGO_URL = "https://raw.githubusercontent.com/ahmadiabw/portal-jss/main/aset/logo%20IPGKT.png";
 const FALLBACK_LOGO = "https://upload.wikimedia.org/wikipedia/commons/8/87/Logo_IPGM.png";
 
 const JSS_STAFF: StaffMember[] = [

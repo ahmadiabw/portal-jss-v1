@@ -8,7 +8,14 @@ import { GoogleGenAI, GenerateContentResponse } from "@google/genai";
 
 export const sendMessageToGemini = async (message: string): Promise<string> => {
   try {
-    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+    // Check if process and API_KEY exist to avoid crashing in static environments
+    const apiKey = typeof process !== 'undefined' ? process.env.API_KEY : '';
+    
+    if (!apiKey) {
+      return "Kunci API tidak dijumpai. Sila tetapkan kunci anda melalui butang konfigurasi.";
+    }
+
+    const ai = new GoogleGenAI({ apiKey });
     
     const response: GenerateContentResponse = await ai.models.generateContent({
       model: 'gemini-3-flash-preview',

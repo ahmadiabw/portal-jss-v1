@@ -7,7 +7,7 @@
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Calendar, Clock, ArrowRight, X, Maximize2, ChevronDown, ChevronUp } from 'lucide-react';
-import { NewsItem } from '../types';
+import { NewsItem } from '../types.ts';
 
 interface NewsSectionProps {
   theme?: 'light' | 'dark';

@@ -7,8 +7,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { X, Send, Headset } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { sendMessageToGemini } from '../services/geminiService';
-import { ChatMessage } from '../types';
+import { sendMessageToGemini } from '../services/geminiService.ts';
+import { ChatMessage } from '../types.ts';
 
 interface AIChatProps {
   theme?: 'light' | 'dark';
